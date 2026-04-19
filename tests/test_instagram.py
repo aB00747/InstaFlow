@@ -93,7 +93,15 @@ def test_poll_reel_status_polls_until_finished():
         with patch("scripts.instagram.time.sleep") as mock_sleep:
             result = poll_reel_status("cid", "tok", timeout=60, interval=5)
     assert result is True
-    assert mock_sleep.call_count == 2  # slept before 1st and 2nd poll (not after FINISHED)
+    assert mock_sleep.call_count == 2  # slept after 1st and 2nd IN_PROGRESS (not after FINISHED)
+
+
+def test_poll_reel_status_raises_on_error_status():
+    mock_resp = _mock_json_response({"status_code": "ERROR"})
+    with patch("scripts.instagram.requests.get", return_value=mock_resp):
+        with patch("scripts.instagram.time.sleep"):
+            with pytest.raises(RuntimeError, match="Reel processing failed"):
+                poll_reel_status("cid", "tok", timeout=60, interval=5)
 
 
 def test_poll_reel_status_raises_on_timeout():
