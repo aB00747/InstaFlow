@@ -1,0 +1,10 @@
+# InstaFlow Captions File
+# Format: filename | caption text | #hashtags
+# Lines starting with # are ignored
+# Separator: space-pipe-space ( | )
+# Max caption length: 2,200 characters total (caption + tags)
+# Max hashtags: 30 per post
+
+post001.jpg | Golden hour magic ✨ Every sunset is a reminder that endings can be beautiful. | #sunset #goldenhour #photography #naturephotography #photooftheday
+post002.mp4 | Behind the scenes of our morning routine 🌅 | #reels #behindthescenes #morning #lifestyle #reelsinstagram
+post003.png | Monday motivation 💪 Start with purpose. | #motivation #monday #mindset #inspire #positivity
