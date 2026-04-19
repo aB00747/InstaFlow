@@ -8,3 +8,13 @@ build/
 .pytest_cache/
 images/*
 !images/.gitkeep
+
+# docs skills
+docs\
+
+# claude
+.claude
+
+# info
+info.md
+
