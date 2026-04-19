@@ -23,6 +23,9 @@ def load_captions(path: str) -> dict[str, str]:
                 continue
             parts = [p.strip() for p in line.split(" | ", 2)]
             if len(parts) != 3:
+                logging.getLogger("instaflow").warning(
+                    "Skipping malformed caption line (expected 3 columns): %r", line
+                )
                 continue
             filename, caption_text, hashtags = parts
             captions[filename] = f"{caption_text}\n\n{hashtags}"
@@ -34,19 +37,24 @@ def load_posted(path: str) -> list[dict]:
     if not os.path.exists(path):
         return []
     with open(path, encoding="utf-8") as f:
-        return json.load(f)
+        data = json.load(f)
+    if not isinstance(data, list):
+        raise ValueError(f"posted.json must contain a JSON array, got {type(data).__name__}")
+    return data
 
 
 def mark_posted(path: str, filename: str, post_id: str) -> None:
-    """Append a new entry to posted.json."""
+    """Append a new entry to posted.json (atomic write)."""
     existing = load_posted(path)
     existing.append({
         "file": filename,
         "post_id": post_id,
         "timestamp": datetime.now(timezone.utc).isoformat(),
     })
-    with open(path, "w", encoding="utf-8") as f:
+    tmp_path = path + ".tmp"
+    with open(tmp_path, "w", encoding="utf-8") as f:
         json.dump(existing, f, indent=2)
+    os.replace(tmp_path, path)
 
 
 def get_next_image(
