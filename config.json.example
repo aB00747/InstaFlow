@@ -17,11 +17,10 @@
     "bot_token": "YOUR_BOT_TOKEN",
     "chat_id": "YOUR_CHAT_ID"
   },
+  "_note": "smtp_host/smtp_port are used by setup_test.py only. poster.py always uses Gmail (smtp.gmail.com:587). Post schedule is set by GitHub Actions cron in .github/workflows/daily_post.yml.",
   "settings": {
     "images_folder": "./images",
     "captions_file": "./captions.txt",
-    "posted_file": "./posted.json",
-    "post_time": "09:00",
-    "timezone": "Asia/Kolkata"
+    "posted_file": "./posted.json"
   }
 }
